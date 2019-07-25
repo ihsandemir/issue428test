@@ -52,10 +52,23 @@ int main() {
         while (true) {
             int key = rand();
             int value = rand();
-            map.put(key, value);
 
-            cout << "Put " << key << " -> " << value << endl;
-
+            int probability = key % 3;
+            switch (probability) {
+                case 0:
+                    map.put(key, value);
+                    cout << "Put " << key << " -> " << value << endl;
+                    break;
+                case 1:
+                    map.remove(key);
+                    cout << "Removed " << key << endl;
+                    break;
+                case 2: {
+                    boost::shared_ptr<int> result = map.get(key);
+                    cout << "Get value for key " << key << endl;
+                    break;
+                }
+            }
             sleep(1);
         }
     } catch (hazelcast::client::exception::IException &e) {
